@@ -1,7 +1,7 @@
 ﻿#region Header
 ////////////////////////////////////////////////////////////////////////////////////
 //
-//	File Description: PackageToContextTemplate
+//	File Description: Package To Context
 // ---------------------------------------------------------------------------------
 //	Date Created	: May 14, 2014
 //	Author			: Rob van Oostenrijk
