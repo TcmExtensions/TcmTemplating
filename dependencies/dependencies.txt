@@ -1,0 +1,8 @@
+Microsoft.Practices.EnterpriseLibrary.Common.dll
+Microsoft.Practices.EnterpriseLibrary.Logging.dll
+Microsoft.Practices.ObjectBuilder.dll
+Tridion.Common.dll
+Tridion.ContentManager.Common.dll
+Tridion.ContentManager.dll
+Tridion.ContentManager.Publishing.dll
+Tridion.ContentManager.Templating.dll
