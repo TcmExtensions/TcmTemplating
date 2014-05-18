@@ -227,20 +227,14 @@ namespace TcmTemplating
 		protected abstract void Transform();
 
 		/// <summary>
-		/// Allow internal templates to provide a PreTransform hook
+		/// Allow templates to provide a PreTransform hook
 		/// </summary>
-		internal virtual void PreTransform()
-		{
-			// No default actions
-		}
+		protected abstract void PreTransform();
 
 		/// <summary>
-		/// Allow internal templates to provide a PostTransform hook
+		/// Allow templates to provide a PostTransform hook
 		/// </summary>
-		internal virtual void PostTransform()
-		{
-			// No default actions
-		}
+		protected abstract void PostTransform();
 
         /// <summary>
         /// Execute the transformation for the specified template
