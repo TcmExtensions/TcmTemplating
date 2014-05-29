@@ -229,12 +229,12 @@ namespace TcmTemplating
 		/// <summary>
 		/// Allow templates to provide a PreTransform hook
 		/// </summary>
-		protected abstract void PreTransform();
+		protected virtual void PreTransform() { }
 
 		/// <summary>
 		/// Allow templates to provide a PostTransform hook
 		/// </summary>
-		protected abstract void PostTransform();
+		protected virtual void PostTransform() { }
 
         /// <summary>
         /// Execute the transformation for the specified template

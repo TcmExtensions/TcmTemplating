@@ -216,9 +216,7 @@ namespace TcmTemplating.Extensions
 					int value;
 
 					if (int.TryParse(match.Groups["number"].Value, out value))
-					{
 						return value;
-					}
 				}
 			}
 

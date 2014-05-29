@@ -32,7 +32,7 @@ namespace TcmTemplating
 		/// <summary>
 		/// Allow internal templates to provide a PreTransform hook
 		/// </summary>
-		internal override void PreTransform()
+		protected override void PreTransform()
 		{
 			// We are rendering in a ComponentTemplate context without a Page present
 			if (Page == null)
@@ -46,7 +46,7 @@ namespace TcmTemplating
 		/// Allow internal templates to provide a PostTransform hook
 		/// </summary>
 		/// <exception cref="System.NotImplementedException"></exception>
-		internal override void PostTransform()
+		protected override void PostTransform()
 		{
 			if (Page == null)
 			{

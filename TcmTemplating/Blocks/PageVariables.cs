@@ -64,7 +64,7 @@ namespace TcmTemplating.Blocks
 			ParseFields(metadataFields.Concat(inheritedFields), Page.MetadataFields());
 
 			// If the page is a navigable item, register it
-			if (Page.IsNavigableItem())
+			if (Page.NavigableNumber() > 0)
 				Package.AddString(PackagePrefix + ".NavigationParent", Page.Id);
 
 			RepositoryLocalObject item = Page.OrganizationalItem;
@@ -72,7 +72,7 @@ namespace TcmTemplating.Blocks
 			while (item != null && item.Id != Publication.Id)
 			{
 				// Found navigable item and no navparent value is set yet.
-				if (item.IsNavigableItem() && Package.GetByName(PackagePrefix + ".NavigationParent") == null)
+				if (item.NavigableNumber() > 0 && Package.GetByName(PackagePrefix + ".NavigationParent") == null)
 					Package.AddString(PackagePrefix + ".NavigationParent", item.Id);
 
 				// Extract inherited fields
