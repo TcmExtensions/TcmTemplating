@@ -89,7 +89,9 @@
     <Compile Include="Extensions\XmlNodeExtensions.cs" />
     <Compile Include="Extensions\XmlWriterExtensions.cs" />
     <Compile Include="Functions\Dreamweaver.cs" />
+    <Compile Include="Helpers\DefaultFormatTextResolver.cs" />
     <Compile Include="Helpers\FormatTextResolver.cs" />
+    <Compile Include="Interfaces\IFormatTextResolver.cs" />
     <Compile Include="Helpers\ItemFieldsFactory.cs" />
     <Compile Include="Helpers\ObjectCache.cs" />
     <Compile Include="Helpers\StringWriterEncoding.cs" />
