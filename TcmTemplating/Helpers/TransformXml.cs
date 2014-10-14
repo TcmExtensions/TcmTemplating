@@ -343,5 +343,21 @@ namespace TcmTemplating.Helpers
 			}
 		}
 
+        /// <summary>
+        /// Executes a XSLT transformation for the given xml
+        /// </summary>
+        /// <param name="xml">XML to transform</param>
+        /// <param name="xmlWriter"><see cref="T:System.Xml.XmlWriter" /> to output to.</param>
+        public void Execute(String xml, XmlWriter xmlWriter)
+        {
+            using (StringReader sr = new StringReader(xml))
+            {
+                using (XmlReader xr = XmlReader.Create(sr))
+                {
+                    mXslCompiledTransform.Transform(xr, XsltArgumentList, xmlWriter, new XmlTcmUriResolver(mEngine));
+                }
+            }
+        }
+
 	}
 }

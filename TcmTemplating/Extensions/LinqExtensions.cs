@@ -71,8 +71,11 @@ namespace TcmTemplating.Extensions
 		/// </returns>
 		public static XElement RemoveNamespaces(this XElement element, IEnumerable<String> preservedNamespaces)
 		{
-			if (element != null && preservedNamespaces != null)
+			if (element != null)
 			{
+                if (preservedNamespaces == null)
+                    preservedNamespaces = new String[] { };
+
 				XElement result = new XElement(element.Name.LocalName);
 
 				foreach (XAttribute attribute in element.Attributes())
@@ -85,9 +88,7 @@ namespace TcmTemplating.Extensions
 					}
 
 					if (!attribute.IsNamespaceDeclaration && String.IsNullOrEmpty(attribute.Name.NamespaceName))
-					{
 						result.Add(new XAttribute(attribute.Name.LocalName, attribute.Value));
-					}
 				}
 
 				result.Add(from n in element.Nodes()

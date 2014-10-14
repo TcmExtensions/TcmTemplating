@@ -417,7 +417,7 @@ namespace TcmTemplating.Helpers
 
 				XElement parsedXml = XElement.Parse(xml);
 
-				return parsedXml.CreateNavigator().Select("*");
+				return parsedXml.CreateNavigator().Select("node()");
 			}
 		}
 

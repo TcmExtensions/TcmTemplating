@@ -15,7 +15,7 @@ namespace TcmTemplating.Helpers
 	public class FormatTextResolver
 	{
 		private TemplateBase mTemplateBase;
-		private IFormatTextResolver[] mResolvers;
+		private IEnumerable<IFormatTextResolver> mResolvers;
 
 		public readonly String SCHEMA_NONE = "<None>";
 
@@ -41,15 +41,30 @@ namespace TcmTemplating.Helpers
 			}
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="FormatTextResolver"/> class.
-		/// </summary>
-		/// <param name="templateBase"><see cref="T:TcmTemplating.TemplateBase"/></param>
-		public FormatTextResolver(TemplateBase templateBase)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormatTextResolver" /> class.
+        /// </summary>
+        /// <param name="templateBase"><see cref="T:TcmTemplating.TemplateBase" /></param>
+		public FormatTextResolver(TemplateBase templateBase): this(templateBase, null)
 		{
-			mTemplateBase = templateBase;
-			mResolvers = new IFormatTextResolver[] { new DefaultFormatTextResolver() };
 		}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormatTextResolver" /> class.
+        /// </summary>
+        /// <param name="templateBase"><see cref="T:TcmTemplating.TemplateBase" /></param>
+        /// <param name="formatTextResolvers">List (in priority) of format text resolvers to use</param>
+        public FormatTextResolver(TemplateBase templateBase, IEnumerable<IFormatTextResolver> formatTextResolvers)
+        {
+            mTemplateBase = templateBase;
+
+            if (formatTextResolvers == null || formatTextResolvers.Count() == 0)
+                formatTextResolvers = new IFormatTextResolver[] { new DefaultFormatTextResolver() };
+            else
+                formatTextResolvers = formatTextResolvers.Concat(new IFormatTextResolver[] { new DefaultFormatTextResolver() });
+
+            mResolvers = formatTextResolvers;
+        }
 
 		/// <summary>
 		/// Gets the <see cref="T:TcmTemplating.TemplateBase"/>
@@ -141,9 +156,7 @@ namespace TcmTemplating.Helpers
 
 						// Update the link title from the components content if a "Title" field is available
 						if (component != null)
-						{
 							Resolve(xLink, component);
-						}
 					}
 					else
 					{
@@ -154,9 +167,7 @@ namespace TcmTemplating.Helpers
 							String url = xLink.Attribute("href").Value;
 
 							if (!String.IsNullOrEmpty(url))
-							{
 								xLink.SetAttributeValue("href", PrefixLink(url));
-							}
 						}
 					}
 				}
