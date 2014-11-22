@@ -5,6 +5,12 @@
 // ---------------------------------------------------------------------------------
 //	Date Created	: May 14, 2014
 //	Author			: Rob van Oostenrijk
+// ---------------------------------------------------------------------------------
+// 	Change History
+//	Date Modified       : October 14, 2014
+//	Changed By          : Venkata Siva Charan Sandra
+//	Change Description  : Added 'NewLineToHTML' function
+// ---------------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////////////
 #endregion
@@ -472,5 +478,16 @@ namespace TcmTemplating.Helpers
 
 			return String.Empty;
 		}
+
+        /// <summary>
+        /// Replaces the new line with the user specified html tag.
+        /// </summary>
+        /// <param name="input">The input <see cref="T:System.String"/>.</param>
+        /// <param name="replacement">The replacement <see cref="T:System.String"/>.</param>
+        /// <returns>Replaced content otherwise String.Empty</returns>
+        public String NewLineToHTML(String input, String replacement)
+        {
+            return input.NewLineToHTML(replacement);
+        }
 	}
 }

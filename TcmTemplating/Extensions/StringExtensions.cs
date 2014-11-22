@@ -6,6 +6,11 @@
 //	Date Created	: May 14, 2014
 //	Author			: Rob van Oostenrijk
 // ---------------------------------------------------------------------------------
+// 	Change History
+//	Date Modified       : October 14, 2014
+//	Changed By          : Venkata Siva Charan Sandra
+//	Change Description  : Added 'NewLineToHTML' function
+// ---------------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////////////
 #endregion
@@ -22,7 +27,37 @@ namespace TcmTemplating.Extensions
 	/// <see cref="StringExtensions" /> provides extensions for <see cref="T:System.String" />
 	/// </summary>
 	public static class StringExtensions
-	{
+    {
+        /// <summary>
+        /// Gets the NewLine formatter.
+        /// </summary>
+        /// <value>
+        /// The formatter.
+        /// </value>
+        private static Regex Formatter
+        {
+            get
+            {
+                return new Regex("\r\n|\r|\n", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
+            }
+        }
+
+        /// <summary>
+        /// Replaces the new line with the user specified html tag.
+        /// </summary>
+        /// <param name="input">The input <see cref="T:System.String"/>.</param>
+        /// <param name="replacement">The replacement <see cref="T:System.String"/>.</param>
+        /// <returns>Replaced content otherwise String.Empty</returns>
+        public static String NewLineToHTML(this String input, String replacement)
+        {
+            if (!String.IsNullOrEmpty(input) && replacement != null)
+            {
+                return Formatter.Replace(input, replacement);
+            }
+
+            return String.Empty;
+        }
+
 		/// <summary>
 		/// Determines whether a <see cref="T:System.String" /> contains <paramref name="containsValue" /> using a <see cref="T:System.StringComparison" />
 		/// </summary>
