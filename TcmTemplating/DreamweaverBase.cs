@@ -37,7 +37,7 @@ namespace TcmTemplating
         /// <param name="Package"><see cref="T:Tridion.ContentManager.Templating.Package"/></param>
         public DreamweaverBase(Engine Engine, Package Package)
         {
-            base.Transform(Engine, Package);
+            base.Initialize(Engine, Package);
         }
     }
 }

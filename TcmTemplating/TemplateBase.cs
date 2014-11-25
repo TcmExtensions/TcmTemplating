@@ -295,7 +295,18 @@ namespace TcmTemplating
 				mPublishingUser = null;
 				mPublicationTarget = null;
 			}
-		}		
+		}
+
+        /// <summary>
+        /// Initializes the specified <see cref="T:Tridion.ContentManager.Templating.Engine"/> and <see cref="T:Tridion.ContentManager.Templating.Package"/>.
+        /// </summary>
+        /// <param name="engine">The <see cref="T:Tridion.ContentManager.Templating.Engine"/>.</param>
+        /// <param name="package">The <see cref="T:Tridion.ContentManager.Templating.Package"/>.</param>
+        internal void Initialize(Engine engine, Package package)
+        {
+            mEngine = engine;
+            mPackage = package;
+        }
 
 		#region Base Functionality
 
