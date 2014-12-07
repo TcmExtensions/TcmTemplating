@@ -30,14 +30,22 @@ namespace TcmTemplating.Helpers
 			return String.Empty;
 		}
 
+        /// <summary>
+        /// Resolves the specified XHTML.
+        /// </summary>
+        /// <param name="xhtml">The <see cref="T:System.Xml.Linq.XElement"/>.</param>
+        /// <param name="component">The <see cref="T:Tridion.ContentManager.ContentManagement.Component"/>.</param>
 		private void Resolve(XElement xhtml, Component component)
 		{
 			String schema = component.BasedOnSchema();
 
 			foreach (IFormatTextResolver resolver in mResolvers)
 			{
-				if (resolver.IsSupported(schema))
-					resolver.Resolve(TemplateBase, xhtml, component);
+                if (resolver.IsSupported(schema))
+                {
+                    resolver.Resolve(TemplateBase, xhtml, component);
+                    break;
+                }
 			}
 		}
 
