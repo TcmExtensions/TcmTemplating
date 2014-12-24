@@ -108,7 +108,7 @@ namespace TcmTemplating
 		/// <value>
 		/// Template <see cref="T:System.Xml.XmlWriterSettings" /> 
 		/// </value>
-		public static XmlWriterSettings TemplateXmlWriterSettings
+		public virtual XmlWriterSettings TemplateXmlWriterSettings
 		{
 			get
 			{

@@ -29,6 +29,40 @@ namespace TcmTemplating
 		private Dictionary<String, Object> mMetadata = null;
 		private HashSet<Keyword> mKeywords = null;
 
+		/// <summary>
+		/// Allow internal templates to provide a PreTransform hook
+		/// </summary>
+		protected override void PreTransform()
+		{
+			IsXmlFragment = true;
+
+			base.PreTransform();
+		}
+
+		/// <summary>
+		/// Gets default <see cref="T:System.Xml.XmlWriterSettings" /> to use for writing Xml templates.
+		/// </summary>
+		/// <value>
+		/// Template <see cref="T:System.Xml.XmlWriterSettings" />
+		/// </value>
+		public override XmlWriterSettings TemplateXmlWriterSettings
+		{
+			get
+			{
+				XmlWriterSettings settings = base.TemplateXmlWriterSettings;
+
+				// Dynamic Component Presentations should not contain a Xml prolog
+				settings.OmitXmlDeclaration = true;
+				return settings;
+			}
+		}
+
+		/// <summary>
+		/// Gets the custom meta data.
+		/// </summary>
+		/// <value>
+		/// The custom meta data.
+		/// </value>
 		protected Dictionary<String, Object> CustomMetaData
 		{
 			get
@@ -40,6 +74,12 @@ namespace TcmTemplating
 			}
 		}
 
+		/// <summary>
+		/// Gets the custom keywords.
+		/// </summary>
+		/// <value>
+		/// The custom keywords.
+		/// </value>
 		protected HashSet<Keyword> CustomKeywords
 		{
 			get

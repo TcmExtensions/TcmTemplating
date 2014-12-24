@@ -15,6 +15,7 @@ using System.Xml;
 using TcmTemplating.Extensions;
 using TcmTemplating.Helpers;
 using TcmTemplating.Templates;
+using Tridion.ContentManager.Templating;
 
 namespace TcmTemplating
 {
@@ -28,6 +29,24 @@ namespace TcmTemplating
 		private XmlWriter mXmlWriter;
 		private String mRootElementName = null;
 		private Boolean mIsXmlFragment = false;
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="XmlTemplateBase" /> will write a XML fragment.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if this <see cref="XmlTemplateBase" /> will write a XML fragment; otherwise, <c>false</c>.
+		/// </value>
+		protected Boolean IsXmlFragment
+		{
+			get
+			{
+				return mIsXmlFragment;
+			}
+			set
+			{
+				mIsXmlFragment = value;
+			}
+		}
 
 		/// <summary>
 		/// Allow internal templates to provide a PreTransform hook
@@ -54,7 +73,10 @@ namespace TcmTemplating
 				mXmlWriter.Close();
 
 				// No output since we are rendering inside XmlTemplateBase
-				Package.AddXml(Tridion.ContentManager.Templating.Package.OutputName, mStringWriter.ToString());
+				if (mIsXmlFragment)
+					Package.AddValue(ContentType.Xml, Tridion.ContentManager.Templating.Package.OutputName, mStringWriter.ToString());
+				else
+					Package.AddXml(Tridion.ContentManager.Templating.Package.OutputName, mStringWriter.ToString());
 
 				mStringWriter.Close();
 				mStringWriter.Dispose();
