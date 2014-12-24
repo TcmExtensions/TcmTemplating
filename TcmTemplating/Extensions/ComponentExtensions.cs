@@ -6,6 +6,11 @@
 //	Date Created	: May 15, 2014
 //	Author			: Rob van Oostenrijk
 // ---------------------------------------------------------------------------------
+// 	Change History
+//	Date Modified		: December 7, 2014
+//	Changed By			: Venkata Siva Charan Sandra
+//	Change Description	: Added generic functions for grouping components such as 
+//							ComponentGroup, ComponentGroupByTemplate and ComponentGroupBySchema
 //
 ////////////////////////////////////////////////////////////////////////////////////
 #endregion
@@ -765,6 +770,85 @@ namespace TcmTemplating.Extensions
 			}
 
 			return -1;
+        }
+
+		/// <summary>
+		/// Returns grouped components from the current <see cref="T:Tridion.ContentManager.CommunicationManagement.Page" />
+		/// list of <see cref="T:Tridion.ContentManager.CommunicationManagement.ComponentPresentation" />
+		/// </summary>
+		/// <param name="component"><see cref="T:Tridion.ContentManager.ContentManagement.Component"/></param>
+		/// <param name="page"><see cref="T:Tridion.ContentManager.CommunicationManagement.Page"/></param>
+		/// <param name="predicate"><see cref="T:System.Func{Tridion.ContentManager.CommunicationManagement.ComponentPresentation, Tridion.ContentManager.CommunicationManagement.ComponentPresentation, System.Boolean}"/></param>
+		/// <returns>List of <see cref="T:Tridion.ContentManager.ContentManagement.Component"/></returns>
+		/// <exception cref="System.ArgumentNullException">
+		/// component or page or predicate
+		/// </exception>
+		public static IList<Component> ComponentGroup(this Component component, Page page, Func<ComponentPresentation, ComponentPresentation, Boolean> predicate)
+		{
+			if (component == null)
+				throw new ArgumentNullException("component");
+
+			if (page == null)
+				throw new ArgumentNullException("page");
+
+			if (predicate == null)
+				throw new ArgumentNullException("predicate");
+
+			// Obtain the component presentations after our current component
+			IEnumerable<ComponentPresentation> presentations = page.ComponentPresentations.SkipWhile((cp) =>
+			{
+				return cp.Component.Id.ItemId != component.Id.ItemId;
+			});
+
+			ComponentPresentation matchedPresentation = presentations.FirstOrDefault();
+
+			if (matchedPresentation == null)
+				return new List<Component>();
+
+			int matchedIndex = page.ComponentPresentations.IndexOf(matchedPresentation);
+
+			if (matchedIndex > 0 && predicate(page.ComponentPresentations[matchedIndex - 1], matchedPresentation))
+				return new List<Component>();
+
+			if (matchedPresentation.Component.Id.ItemId != component.Id.ItemId)
+				return new List<Component>();
+
+			return presentations.TakeWhile((cp) =>
+			{
+				return predicate(matchedPresentation, cp);
+			}).Select(cp => cp.Component).ToList();
+		}
+
+		/// <summary>
+		/// Returns grouped components from the current <see cref="T:Tridion.ContentManager.CommunicationManagement.Page" />
+		/// list of <see cref="T:Tridion.ContentManager.CommunicationManagement.ComponentPresentation" /> based on 
+		/// <see cref="T:Tridion.ContentManager.CommunicationManagement.ComponentTemplate"/>
+		/// </summary>
+		/// <param name="component"><see cref="T:Tridion.ContentManager.ContentManagement.Component"/></param>
+		/// <param name="page"><see cref="T:Tridion.ContentManager.CommunicationManagement.Page"/></param>
+		/// <returns>List of <see cref="T:Tridion.ContentManager.ContentManagement.Component"/></returns>
+		public static IList<Component> ComponentGroupByTemplate(this Component component, Page page)
+		{
+			return ComponentGroup(component, page, (cp1, cp2) =>
+			{
+				return (cp1.ComponentTemplate.Id.ItemId == cp2.ComponentTemplate.Id.ItemId);
+			});
+		}
+
+		/// <summary>
+		/// Returns grouped components from the current <see cref="T:Tridion.ContentManager.CommunicationManagement.Page" />
+		/// list of <see cref="T:Tridion.ContentManager.CommunicationManagement.ComponentPresentation" /> based on 
+		/// <see cref="T:Tridion.ContentManager.ContentManagement.Schema"/>
+		/// </summary>
+		/// <param name="component"><see cref="T:Tridion.ContentManager.ContentManagement.Component"/></param>
+		/// <param name="page"><see cref="T:Tridion.ContentManager.CommunicationManagement.Page"/></param>
+		/// <returns>List of <see cref="T:Tridion.ContentManager.ContentManagement.Component"/></returns>
+		public static IList<Component> ComponentGroupBySchema(this Component component, Page page)
+		{
+			return ComponentGroup(component, page, (cp1, cp2) =>
+			{
+				return (cp1.Component.Schema.Id.ItemId == cp2.Component.Schema.Id.ItemId);
+			});
 		}
 	}
 }
