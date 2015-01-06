@@ -52,6 +52,7 @@ namespace TcmTemplating.Extensions
 				writer.WriteAttribute("uri", value.Id);
 
 				writer.WriteAttributeOptional("key", value.Key);
+				writer.WriteAttributeOptional("name", value.Title);
 				writer.WriteAttributeOptional("description", value.Description);
 
 				writer.WriteAttribute("root", value.IsRoot.ToString().ToLower());
