@@ -594,6 +594,32 @@ namespace TcmTemplating.Extensions
         }
 
 		/// <summary>
+		/// Optionally writes a <see cref="T:System.Int" /> value to a XML element
+		/// Note it only creates the element when the value is not 0
+		/// </summary>
+		/// <param name="writer"><see cref="T:System.Xml.XmlWriter" /></param>
+		/// <param name="localName">Node Name</param>
+		/// <param name="Value"><see cref="T:System.String" /> value</param>
+		public static void WriteElementOptional(this XmlWriter writer, String localName, int value)
+		{
+			if (writer != null && value != 0)
+				writer.WriteElement(localName, value);
+		}
+
+		/// <summary>
+		/// Optionally writes a <see cref="T:System.Double" /> value to a XML element
+		/// Note it only creates the element when the value is not 0
+		/// </summary>
+		/// <param name="writer"><see cref="T:System.Xml.XmlWriter" /></param>
+		/// <param name="localName">Node Name</param>
+		/// <param name="Value"><see cref="T:System.String" /> value</param>
+		public static void WriteElementOptional(this XmlWriter writer, String localName, Double value)
+		{
+			if (writer != null && value != 0)
+				writer.WriteElement(localName, value);
+		}
+
+		/// <summary>
 		/// Writes the given XHTML to the <see cref="T:System.Xml.XmlWriter" />
 		/// Ensure the XHTML string is valid XML to write.
 		/// </summary>
