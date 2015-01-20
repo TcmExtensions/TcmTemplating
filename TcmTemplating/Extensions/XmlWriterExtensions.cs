@@ -5,6 +5,12 @@
 // ---------------------------------------------------------------------------------
 //	Date Created	: May 14, 2014
 //	Author			: Rob van Oostenrijk
+// ---------------------------------------------------------------------------------
+// 	Change History
+//	Date Modified       : January 20, 2014
+//	Changed By          : Venkata Siva Charan Sandra
+//	Change Description  : Added 'WriteAttribute' function for Boolean
+// ---------------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////////////
 #endregion
@@ -184,6 +190,18 @@ namespace TcmTemplating.Extensions
 		/// <param name="localName">Node Name.</param>
 		/// <param name="value"><see cref="T:System.Double" /> value</param>
 		public static void WriteAttribute(this XmlWriter writer, String localName, double value)
+		{
+			if (writer != null)
+				writer.WriteAttributeString(localName, value.ToString());
+		}
+
+		/// <summary>
+		/// Writes a <see cref="T:System.Boolean" /> value to a XML attribute
+		/// </summary>
+		/// <param name="writer"><see cref="T:System.Xml.XmlWriter" />.</param>
+		/// <param name="localName">Node Name.</param>
+		/// <param name="value"><see cref="T:System.Boolean" /> value</param>
+		public static void WriteAttribute(this XmlWriter writer, String localName, bool value)
 		{
 			if (writer != null)
 				writer.WriteAttributeString(localName, value.ToString());
