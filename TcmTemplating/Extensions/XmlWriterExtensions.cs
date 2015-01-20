@@ -5,6 +5,12 @@
 // ---------------------------------------------------------------------------------
 //	Date Created	: May 14, 2014
 //	Author			: Rob van Oostenrijk
+// ---------------------------------------------------------------------------------
+// 	Change History
+//	Date Modified       : January 20, 2014
+//	Changed By          : Venkata Siva Charan Sandra
+//	Change Description  : Added 'WriteAttribute' function for Boolean
+// ---------------------------------------------------------------------------------
 //
 ////////////////////////////////////////////////////////////////////////////////////
 #endregion
@@ -52,6 +58,7 @@ namespace TcmTemplating.Extensions
 				writer.WriteAttribute("uri", value.Id);
 
 				writer.WriteAttributeOptional("key", value.Key);
+				writer.WriteAttributeOptional("name", value.Title);
 				writer.WriteAttributeOptional("description", value.Description);
 
 				writer.WriteAttribute("root", value.IsRoot.ToString().ToLower());
@@ -183,6 +190,18 @@ namespace TcmTemplating.Extensions
 		/// <param name="localName">Node Name.</param>
 		/// <param name="value"><see cref="T:System.Double" /> value</param>
 		public static void WriteAttribute(this XmlWriter writer, String localName, double value)
+		{
+			if (writer != null)
+				writer.WriteAttributeString(localName, value.ToString());
+		}
+
+		/// <summary>
+		/// Writes a <see cref="T:System.Boolean" /> value to a XML attribute
+		/// </summary>
+		/// <param name="writer"><see cref="T:System.Xml.XmlWriter" />.</param>
+		/// <param name="localName">Node Name.</param>
+		/// <param name="value"><see cref="T:System.Boolean" /> value</param>
+		public static void WriteAttribute(this XmlWriter writer, String localName, bool value)
 		{
 			if (writer != null)
 				writer.WriteAttributeString(localName, value.ToString());
@@ -591,6 +610,32 @@ namespace TcmTemplating.Extensions
             if (writer != null && !String.IsNullOrEmpty(value))
                 writer.WriteElement(localName, value);
         }
+
+		/// <summary>
+		/// Optionally writes a <see cref="T:System.Int" /> value to a XML element
+		/// Note it only creates the element when the value is not 0
+		/// </summary>
+		/// <param name="writer"><see cref="T:System.Xml.XmlWriter" /></param>
+		/// <param name="localName">Node Name</param>
+		/// <param name="Value"><see cref="T:System.String" /> value</param>
+		public static void WriteElementOptional(this XmlWriter writer, String localName, int value)
+		{
+			if (writer != null && value != 0)
+				writer.WriteElement(localName, value);
+		}
+
+		/// <summary>
+		/// Optionally writes a <see cref="T:System.Double" /> value to a XML element
+		/// Note it only creates the element when the value is not 0
+		/// </summary>
+		/// <param name="writer"><see cref="T:System.Xml.XmlWriter" /></param>
+		/// <param name="localName">Node Name</param>
+		/// <param name="Value"><see cref="T:System.String" /> value</param>
+		public static void WriteElementOptional(this XmlWriter writer, String localName, Double value)
+		{
+			if (writer != null && value != 0)
+				writer.WriteElement(localName, value);
+		}
 
 		/// <summary>
 		/// Writes the given XHTML to the <see cref="T:System.Xml.XmlWriter" />
